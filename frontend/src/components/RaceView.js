@@ -9,15 +9,15 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { TableWrapper } from "../style.js";
 
-const AthleteView = () => {
-  const [athletes, setAthletes] = useState([]);
-  var getAthletes = () => {
+const RaceView = () => {
+  const [races, setRaces] = useState([]);
+  var getVenues = () => {
     axios
-      .get("/api/athletes")
+      .get("/api/races")
       .then(function (response) {
         // handle success
         console.log(response.data);
-        setAthletes(response.data.athletes);
+        setRaces(response.data.races);
       })
       .catch(function (error) {
         // handle error
@@ -28,41 +28,39 @@ const AthleteView = () => {
       });
   };
   useEffect(() => {
-    getAthletes();
+    getVenues();
   }, []);
 
   return (
     <TableWrapper>
-      <h1>Athletes</h1>
+      <h1>Races</h1>
 
-      {athletes.length == 0 ? (
-        <div>no athletes</div>
+      {races.length == 0 ? (
+        <div>no races</div>
       ) : (
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Athlete</TableCell>
-                <TableCell align="right">Age</TableCell>
+                <TableCell>Race</TableCell>
                 <TableCell align="right">City</TableCell>
                 <TableCell align="right">State</TableCell>
+                <TableCell align="right">Address</TableCell>
                 <TableCell align="right">Phone</TableCell>
                 <TableCell align="right">Division</TableCell>
-                <TableCell align="right">Races</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {athletes.map((athlete) => (
-                <TableRow key={athlete.id}>
+              {races.map((race) => (
+                <TableRow key={race.id}>
                   <TableCell component="th" scope="row">
-                    {athlete.name}
+                    {race.name}
                   </TableCell>
-                  <TableCell align="right">{athlete.age}</TableCell>
-                  <TableCell align="right">{athlete.city}</TableCell>
-                  <TableCell align="right">{athlete.state}</TableCell>
-                  <TableCell align="right">{athlete.phone}</TableCell>
-                  <TableCell align="right">{athlete.division}</TableCell>
-                  <TableCell align="right">{athlete.races}</TableCell>
+                  <TableCell align="right">{race.city}</TableCell>
+                  <TableCell align="right">{race.state}</TableCell>
+                  <TableCell align="right">{race.address}</TableCell>
+                  <TableCell align="right">{race.phone}</TableCell>
+                  <TableCell align="right">{race.division}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -73,4 +71,4 @@ const AthleteView = () => {
   );
 };
 
-export default AthleteView;
+export default RaceView;

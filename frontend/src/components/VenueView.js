@@ -7,12 +7,13 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import { TableWrapper } from "../style.js";
 
 const VenueView = () => {
   const [venues, setVenues] = useState([]);
   var getVenues = () => {
     axios
-      .get("/venues")
+      .get("/api/venues")
       .then(function (response) {
         // handle success
         console.log(response.data);
@@ -31,8 +32,8 @@ const VenueView = () => {
   }, []);
 
   return (
-    <div>
-      <div>Venues</div>
+    <TableWrapper>
+      <h1>Venues</h1>
 
       {venues.length == 0 ? (
         <div>no venues</div>
@@ -64,7 +65,7 @@ const VenueView = () => {
           </Table>
         </TableContainer>
       )}
-    </div>
+    </TableWrapper>
   );
 };
 

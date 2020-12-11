@@ -37,6 +37,17 @@ class Venue(db.Model):
     state = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(120), nullable=False)
     # races = db.relationship('Race', backref='venues')
+    
+    def insert(self): 
+        db.session.add(self)
+        db.session.commit()
+    
+    def update(self): 
+        db.session.commit()
+    
+    def delete(self): 
+        db.session.delete(self)
+        db.session.commit()
 
     def format(self):
         return {
@@ -44,9 +55,9 @@ class Venue(db.Model):
             'name': self.name,
             'city': self.city,
             'state': self.state,
-            'address': self.address,
-            'races': self.races
+            'address': self.address
         }
+
     def __repr__(self):
         return f'<Venue ID: {self.id}, name: {self.name}>'
 
@@ -61,7 +72,18 @@ class Athlete(db.Model):
     phone = db.Column(db.String(120))
     division = db.Column(db.String(120), nullable=False)
     # races = db.relationship('Race', backref='athlete')
-   
+
+    def insert(self): 
+        db.session.add(self)
+        db.session.commit()
+    
+    def update(self): 
+        db.session.commit()
+    
+    def delete(self): 
+        db.session.delete(self)
+        db.session.commit()
+
     def format(self):
         return {
             'id': self.id,
