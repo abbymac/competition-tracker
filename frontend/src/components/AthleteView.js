@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { TableWrapper } from "../style.js";
+import { Wrapper } from "../style.js";
 
 const AthleteView = () => {
   const [athletes, setAthletes] = useState([]);
@@ -32,7 +32,7 @@ const AthleteView = () => {
   }, []);
 
   return (
-    <TableWrapper>
+    <Wrapper>
       <h1>Athletes</h1>
 
       {athletes.length == 0 ? (
@@ -69,7 +69,7 @@ const AthleteView = () => {
           </Table>
         </TableContainer>
       )}
-    </TableWrapper>
+    </Wrapper>
   );
 };
 

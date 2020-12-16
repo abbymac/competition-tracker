@@ -35,9 +35,8 @@ function App() {
 
   return (
     <BigBackground>
-      {/* <div className="App"> */}
-      <NavBar mobile={isMobileSize} transparent={navBackground} />
       <Router>
+        <NavBar mobile={isMobileSize} transparent={navBackground} />
         <Switch>
           <Route path="/" exact component={HomeView} />
           <Route path="/athletes" exact component={AthleteView} />
@@ -45,11 +44,6 @@ function App() {
           <Route path="/races" exact component={RaceView} />
         </Switch>
       </Router>
-      {/* <main>
-        <AthleteView />
-        <VenueView />
-      </main> */}
-      {/* </div> */}
     </BigBackground>
   );
 }

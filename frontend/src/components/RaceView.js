@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { TableWrapper } from "../style.js";
+import { Wrapper } from "../style.js";
 
 const RaceView = () => {
   const [races, setRaces] = useState([]);
@@ -32,7 +32,7 @@ const RaceView = () => {
   }, []);
 
   return (
-    <TableWrapper>
+    <Wrapper>
       <h1>Races</h1>
 
       {races.length == 0 ? (
@@ -67,7 +67,7 @@ const RaceView = () => {
           </Table>
         </TableContainer>
       )}
-    </TableWrapper>
+    </Wrapper>
   );
 };
 

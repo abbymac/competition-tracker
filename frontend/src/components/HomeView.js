@@ -4,7 +4,7 @@ import { BigBackground } from "../style.js";
 const HomeView = () => {
   return (
     <BigBackground align="center">
-      <div>hello </div>
+      <h1>Competition Tracker</h1>
     </BigBackground>
   );
 };

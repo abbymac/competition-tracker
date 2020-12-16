@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-scroll";
+// import { Link } from "react-scroll";
+import { NavLink } from "react-router-dom";
 
 const NavBar = ({ transparent, mobile }) => {
   return (
     <NavContain transparent={transparent}>
       <Left>
-        <NavItem
+        {/* <NavItem
           activeClass="active"
           to="experiences"
           spy={true}
@@ -45,7 +46,11 @@ const NavBar = ({ transparent, mobile }) => {
           duration={500}
         >
           Projects
-        </NavItem>
+        </NavItem> */}
+        <NavItem to="/">Home</NavItem>
+        <NavItem to="/athletes">Athletes</NavItem>
+        <NavItem to="/venues">Venues</NavItem>
+        <NavItem to="/races">Races</NavItem>
       </Left>
     </NavContain>
   );
@@ -83,7 +88,7 @@ const NavContain = styled.div`
   }
 `;
 
-const NavItem = styled(Link)`
+const NavItem = styled(NavLink)`
   color: black;
   text-decoration: none;
   margin: 0 10px;
