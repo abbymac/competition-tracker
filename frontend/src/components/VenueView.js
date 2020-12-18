@@ -8,12 +8,18 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import MenuItem from "@material-ui/core/MenuItem";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
 
-import { Wrapper, Row, BigBackground } from "../style.js";
+import {
+  Wrapper,
+  Row,
+  BigBackground,
+  FormContainer,
+  InputText,
+  InputSelect,
+  Label,
+  FormButton,
+} from "../style.js";
+
 import { States } from "./States.js";
 
 const VenueView = () => {
@@ -70,6 +76,20 @@ const VenueView = () => {
     console.log("name", newVenue.name);
     console.log("city", newVenue.city);
     console.log("tot", newVenue);
+    axios
+      .post("/api/venues", newVenue)
+      .then(function (response) {
+        // handle success
+        console.log(response.data);
+        setVenues((prevVenues) => [...prevVenues, newVenue]);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .then(function () {
+        // always executed
+      });
   };
 
   const handleClose = () => {
@@ -103,7 +123,7 @@ const VenueView = () => {
                 {venues.map((venue) => (
                   <Row key={venue.id} onClick={(e) => handleClick(e)}>
                     <TableCell component="th" scope="row">
-                      <a href={"/venues" + venue.id}>{venue.name}</a>
+                      <a href={"/venues/" + venue.id}>{venue.name}</a>
                     </TableCell>
                     <TableCell align="right">{venue.city}</TableCell>
                     <TableCell align="right">{venue.state}</TableCell>
@@ -118,33 +138,33 @@ const VenueView = () => {
       </Wrapper>
       <Wrapper>
         <h2>Add a New Venue</h2>
-        <form onSubmit={submitVenue}>
-          <TextField label="Venue Name" name="name" onChange={handleChange} />
-          <TextField label="City" name="city" onChange={handleChange} />
-
-          <InputLabel id="demo-controlled-open-select-label">State</InputLabel>
-          <Select
-            labelId="demo-controlled-open-select-label"
-            id="demo-controlled-open-select"
-            open={open}
-            name="state"
-            onClose={handleClose}
-            onOpen={handleOpen}
-            value={newVenue.state}
-            onChange={handleChange}
-          >
-            {Object.keys(States).map((ab) => (
-              <MenuItem value={ab} id={ab}>
-                {States[ab]}
-              </MenuItem>
-            ))}
-          </Select>
-          <TextField label="Address" name="address" onChange={handleChange} />
-
-          <Button type="submit" value="Submit" variant="contained">
-            Submit
-          </Button>
-        </form>
+        <FormContainer>
+          <form onSubmit={submitVenue}>
+            <InputText label="Venue Name" name="name" onChange={handleChange} />
+            <InputText label="City" name="city" onChange={handleChange} />
+            <Label id="demo-controlled-open-select-label">State</Label>
+            <InputSelect
+              labelId="demo-controlled-open-select-label"
+              id="demo-controlled-open-select"
+              open={open}
+              name="state"
+              onClose={handleClose}
+              onOpen={handleOpen}
+              value={newVenue.state}
+              onChange={handleChange}
+            >
+              {Object.keys(States).map((ab) => (
+                <MenuItem value={ab} id={ab} key={ab}>
+                  {States[ab]}
+                </MenuItem>
+              ))}
+            </InputSelect>
+            <InputText label="Address" name="address" onChange={handleChange} />
+            <FormButton type="submit" value="Submit" variant="contained">
+              Submit
+            </FormButton>
+          </form>
+        </FormContainer>
       </Wrapper>
     </BigBackground>
   );

@@ -175,15 +175,39 @@ def create_app(test_config=None):
       'venues': formatted_venues
     })
 
+  @app.route('/api/venues/<int:venue_id>', methods=['GET'])
+  def get_venue_by_id(venue_id):
+    venue = Venue.query.filter(Venue.id == venue_id).one_or_none()
+    if venue is None:
+        return jsonify({
+            'success': False,
+            'error': 404,
+            'message': 'No such race found in database.'
+        }), 404
+    formatted_venue = venue.format()
+    return jsonify({
+      'success': True, 
+      'venue': formatted_venue
+    })
+
   @app.route('/api/venues', methods=['POST'])
   def create_venue(): 
+
     data = json.loads(request.data.decode('utf-8'))
     error = False 
+
+    print('data', data)
 
     name = data.get('name', None)
     city = data.get('city', None)
     state = data.get('state', None)
     address = data.get('address', None)
+
+    print('name', name)
+    print('city', city)
+    print('state', state)
+    print('address', address)
+
 
     try: 
       venue = Venue(
@@ -209,6 +233,43 @@ def create_app(test_config=None):
         'message': 'venue create successfully'
       })
 
+  @app.route('/api/venues/<int:venue_id>', methods=['PATCH'])
+  def edit_venue(venue_id): 
+    data = json.loads(request.data.decode('utf-8'))
+    venue = Venue.query.filter(Venue.id == venue_id).one_or_none()
+    
+    name = data.get('name', None)
+    city = data.get('city', None)
+    state = data.get('state', None)
+    address = data.get('address', None)
+
+
+    if venue is None: 
+      return jsonify({
+        'success': False, 
+        'error': 404,
+        'message': 'No such athlete found in database.'
+      }), 404
+    
+    try: 
+      if name:
+        venue.name = name 
+      if city:
+        venue.city = city 
+      if state:
+        venue.state = state 
+      if address:
+        venue.address = address
+
+      venue.update()
+      return jsonify({
+            'success': True
+        }), 200
+
+    except Exception as error_msg:
+        print(error_msg)
+        abort(422)
+
   @app.route('/api/venues/<int:venue_id>', methods=['DELETE'])
   def delete_venue(venue_id): 
     error = False 
@@ -228,8 +289,8 @@ def create_app(test_config=None):
         'success': True,
         'deleted': venue_id
       })
-
-
+  
+  
   # ----------------------------------------------------------------------------------------
   # Races
   # ----------------------------------------------------------------------------------------
@@ -237,44 +298,33 @@ def create_app(test_config=None):
   @app.route('/api/races', methods=['GET'])
   def get_races(): 
     races = Race.query.all()
-
-    def format(racer): 
-      return  {
-        'racer_id': racer.id,
-        'name': racer.name,
-        'city': racer.city, 
-        'phone': racer.phone, 
-        'state': racer.state, 
-        'division': racer.division       
-      }
     formatted_races = [race.format() for race in races]
-
-    for comp in races: 
-      rs = Athlete.query.join(racers).join(Race).filter((racers.c.racer_id == Athlete.id) & (racers.c.race_id == Race.id) & (racers.c.race_id == comp.id)).all()
-    # print('t', rs)
-    race_athletes = []
-    for x in rs: 
-      # print('x is', x)
-      form = format(x)
-      race_athletes.append(form)
-      print('something', race_athletes)
-    data = {}
+    
+    for comp in formatted_races: 
+      rs = Athlete.query.join(racers).join(Race).filter((racers.c.racer_id == Athlete.id) & (racers.c.race_id == Race.id) & (racers.c.race_id == comp['id'])).all()
+      venue = Venue.query.filter(Venue.id == comp['venue_id']).one_or_none()
+      formatted_venue = venue.format()
+      formatted_racers = [racer.format() for racer in rs]
+      comp['racers'] = formatted_racers
+      comp['venue'] = formatted_venue
 
     return jsonify({
       'success': True, 
       'races': formatted_races,
-      'racer_athletes': race_athletes
     })
 
-  @app.route('/api/races/<int:race_id>', methods=['GET'])
-  def get_race_by_id(race_id):
-    race = Race.query.filter(Race.id == race_id).one_or_none()
-    if race is None:
-        return jsonify({
-            'success': False,
-            'error': 404,
-            'message': 'No such race found in database.'
-        }), 404
+  # @app.route('/api/races/<int:race_id>', methods=['GET'])
+  # def get_race_by_id(race_id):
+  #   race = Race.query.filter(Race.id == race_id).one_or_none()
+  #   if race is None:
+  #       return jsonify({
+  #           'success': False,
+  #           'error': 404,
+  #           'message': 'No such race found in database.'
+  #       }), 404
+
+    
+
     
   # ----------------------------------------------------------------------------------------
   # Error Handlers

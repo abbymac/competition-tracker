@@ -43,24 +43,28 @@ const RaceView = () => {
             <TableHead>
               <TableRow>
                 <TableCell>Race</TableCell>
+                <TableCell align="right">Division</TableCell>
+                <TableCell align="right">Prize</TableCell>
+                <TableCell align="right">Start Time</TableCell>
+                <TableCell align="right">Venue</TableCell>
                 <TableCell align="right">City</TableCell>
                 <TableCell align="right">State</TableCell>
-                <TableCell align="right">Address</TableCell>
-                <TableCell align="right">Phone</TableCell>
-                <TableCell align="right">Division</TableCell>
+                <TableCell align="right">Racers</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {races.map((race) => (
                 <TableRow key={race.id}>
                   <TableCell component="th" scope="row">
-                    {race.name}
+                    <a href={"/races/" + race.id}>{race.name}</a>
                   </TableCell>
-                  <TableCell align="right">{race.city}</TableCell>
-                  <TableCell align="right">{race.state}</TableCell>
-                  <TableCell align="right">{race.address}</TableCell>
-                  <TableCell align="right">{race.phone}</TableCell>
                   <TableCell align="right">{race.division}</TableCell>
+                  <TableCell align="right">{race.prize}</TableCell>
+                  <TableCell align="right">{race.start_time}</TableCell>
+                  <TableCell align="right">{race.venue.name}</TableCell>
+                  <TableCell align="right">{race.venue.city}</TableCell>
+                  <TableCell align="right">{race.venue.state}</TableCell>
+                  <TableCell align="right">{race.racers.length}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

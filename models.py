@@ -117,6 +117,7 @@ class Race(db.Model):
             'id': self.id,
             'name': self.name,
             'start_time': self.start_time,
+            'division': self.division,
             'prize': self.prize,
             'venue_id': self.venue_id,
         }

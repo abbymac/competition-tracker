@@ -2,6 +2,7 @@ import AthleteView from "./components/AthleteView";
 import VenueView from "./components/VenueView";
 import HomeView from "./components/HomeView";
 import RaceView from "./components/RaceView";
+import EditVenue from "./components/EditVenue";
 
 import NavBar from "./components/NavBar";
 import { useMediaQuery } from "react-responsive";
@@ -35,13 +36,14 @@ function App() {
 
   return (
     <BigBackground>
-      <Router>
+      <Router location={window.location.href}>
         <NavBar mobile={isMobileSize} transparent={navBackground} />
         <Switch>
           <Route path="/" exact component={HomeView} />
           <Route path="/athletes" exact component={AthleteView} />
           <Route path="/venues" exact component={VenueView} />
           <Route path="/races" exact component={RaceView} />
+          <Route path="/venues/:venueId" component={EditVenue} />
         </Switch>
       </Router>
     </BigBackground>
