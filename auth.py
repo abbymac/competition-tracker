@@ -3,13 +3,18 @@ from flask import request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
-from decouple import config
+# from decouple import config
 
 
 AUTH0_DOMAIN = 'amack.us.auth0.com'
-ALGORITHMS = config('ALGORITHMS')
-API_AUDIENCE = config('API_AUDIENCE')
+ALGORITHMS = ['RS256']
+API_AUDIENCE = 'competition'
 
+
+# ALGORITHMS = config('ALGORITHMS')
+# API_AUDIENCE = config('API_AUDIENCE')
+
+# https://amack.us.auth0.com/authorize?audience=competition&response_type=token&client_id=20AyTE5FtHiIWxCVLLT0OkcmW9PTNwsz&redirect_uri=https://127.0.0.1:3000/
 
 class AuthError(Exception):
     """ A standardized way to communicate auth failure modes
@@ -35,6 +40,7 @@ def get_token_auth_header():
     - Checks if bearer token is present
         - If not present, raise 401 error
     """
+
 
     # check if authorization is in request header
     if 'Authorization' not in request.headers:

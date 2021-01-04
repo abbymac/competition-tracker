@@ -9,6 +9,8 @@ from pytz import utc
 from flask_moment import Moment
 from flask_migrate import Migrate
 from datetime import datetime
+from auth import AuthError, requires_auth
+
 
 from models import setup_db, db, Athlete, Venue, Race, racers
 
@@ -38,7 +40,35 @@ def create_app(test_config=None):
   # ----------------------------------------------------------------------------------------
 
   @app.route('/api/athletes', methods=['GET'])
-  def get_athletes(): 
+  def get_athletes():
+    """ Get all athletes from DB
+
+        Permissions: none required, read only
+
+        Returns:
+            - 200 status code with json obj of
+              athletes in dict.
+            - Example response:
+            @TODO change to approp response.
+                {
+                    "drinks": [
+                        {
+                            "id": 1,
+                            "recipe": [
+                                {
+                                    "color": "blue",
+                                    "parts": 1
+                                }
+                            ],
+                            "title": "Water"
+                        }
+                    ],
+                    "success": true
+                }
+
+        Raises:
+            - 404 if unable to find any corresponding athlete
+    """
     now = datetime.now(tz=None)
     print(now)
     athletes = Athlete.query.all()
@@ -52,7 +82,48 @@ def create_app(test_config=None):
     })
 
   @app.route('/api/athletes/<int:athlete_id>', methods=['PATCH'])
-  def edit_athlete(athlete_id): 
+  @requires_auth('patch:information')
+  def edit_athlete(payload, athlete_id):
+    """ Edit an athlete in DB
+
+        Permissions: patch:information
+
+        Params: payload, athlete_id
+            - payload: decoded jwt payload that has new athlete info
+            - athlete_id: Id of athlete to be edited
+                - athlete_id is passed through the path. Ex: api/athletes/2 sends
+                  patch request for athlete of id=2
+            - example post req:
+                {
+                    "name": "Abby"
+                }
+
+        Returns:
+            - Status code with json obj of
+              the edited athlete in long form in dict
+            - Example response:
+            @TODO change to approp response.
+                {
+                    "athletes": [
+                        {
+                            "id": 2,
+                            "recipe": [
+                                {
+                                    "color": "brown",
+                                    "name": "Coffee",
+                                    "parts": 1
+                                }
+                            ],
+                            "title": "Decaf"
+                        }
+                    ],
+                    "success": true
+                }
+
+        Raises:
+            - 404 if no athlete is found with corresponding athlete_id
+            - 422 if unable to process request
+    """ 
     data = json.loads(request.data.decode('utf-8'))
     athlete = Athlete.query.filter(Athlete.id == athlete_id).one_or_none()
     
@@ -63,7 +134,7 @@ def create_app(test_config=None):
     phone = data.get('phone', None)
     division = data.get('division', None)
 
-    if athlete is None: 
+    if athlete is None:
       return jsonify({
         'success': False, 
         'error': 404,
@@ -94,7 +165,53 @@ def create_app(test_config=None):
         abort(422)
       
   @app.route('/api/athletes', methods=['POST'])
-  def create_athlete(): 
+  @requires_auth('post:information')
+  def create_athlete(payload):
+    """ Create a athlete in DB
+
+        Permissions: post:information
+
+        Params: decoded JWT payload with:
+            - athlete details
+            - required: name, age, city, state, division
+             id = db.Column(db.Integer, primary_key=True)
+            - example post req:
+            @TODO: add post req 
+                {
+                    "title": "Coffee",
+                    "recipe": [{
+                        "name": "Coffee",
+                        "color": "brown",
+                        "parts": 1
+                    }]
+                }
+
+        Returns:
+            - Status code with json obj of
+               The new athlete in long form in dict
+            - Example response:
+            @TODO: add response  
+                {
+                    "athletes": [
+                        {
+                            "id": 2,
+                            "recipe": [
+                                {
+                                    "color": "brown",
+                                    "name": "Coffee",
+                                    "parts": 1
+                                }
+                            ],
+                            "title": "Coffee"
+                        }
+                    ],
+                    "success": true
+                }
+
+        Raises:
+            - 422 if name, age, city, state, and division are not given in
+              payload or unable to process
+    """
     data = json.loads(request.data.decode('utf-8'))
     error = False
 
@@ -105,6 +222,12 @@ def create_app(test_config=None):
     phone = data.get('phone', None)
     division = data.get('division', None)
 
+    if not name or not age or not city or not state or not division:
+      return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "Name, age, city, state, and division are required."
+        }), 422
     try: 
       athlete = Athlete(
         name=name,
@@ -132,7 +255,33 @@ def create_app(test_config=None):
       })
 
   @app.route('/api/athletes/<int:athlete_id>', methods=['DELETE'])
-  def delete_athlete(athlete_id): 
+  @requires_auth('delete:information')
+  def delete_athlete(payload, athlete_id):
+    """ Delete a athlete with id=athlete_id from DB
+
+        Permissions: delete:information
+
+        Params: payload, athlete_id
+            - payload: The decoded jwt payload
+            - athlete_id: Id of athlete to be edited
+                - athlete_id is passed through the path. Ex: /api/athletes/2 sends
+                  delete request for athlete of id=2
+
+        Returns:
+            - Status code 200 json obj with deleted ID, message,
+              and boolean success
+            - Example response:
+                {
+                    "deleted": 2,
+                    "message": "athlete deleted successfully",
+                    "success": true
+                }
+
+        Raises:
+            - 404 if no athlete found with corresponding athlete_id
+            - 500 if unable to process delete request
+    """
+
     error = False 
     athlete = Athlete.query.filter(Athlete.id == athlete_id).one_or_none()
 
@@ -164,7 +313,35 @@ def create_app(test_config=None):
   # ----------------------------------------------------------------------------------------
 
   @app.route('/api/venues', methods=['GET'])
-  def get_venues(): 
+  def get_venues():
+    """ Get all venues
+
+        Permissions: none required, read only
+
+        Returns:
+            - 200 status code with json obj of
+              venues in dict.
+            - Example response:
+            @TODO change to approp response.
+                {
+                    "drinks": [
+                        {
+                            "id": 1,
+                            "recipe": [
+                                {
+                                    "color": "blue",
+                                    "parts": 1
+                                }
+                            ],
+                            "title": "Water"
+                        }
+                    ],
+                    "success": true
+                }
+
+        Raises:
+            - 404 if unable to find any corresponding venue
+    """
     venues = Venue.query.all()
     print(venues)
     formatted_venues = [venue.format() for venue in venues]
@@ -177,6 +354,34 @@ def create_app(test_config=None):
 
   @app.route('/api/venues/<int:venue_id>', methods=['GET'])
   def get_venue_by_id(venue_id):
+    """ Get a particular venue's information
+
+        Permissions: none required, read only
+
+        Returns:
+            - 200 status code with json obj of
+              venue in dict.
+            - Example response:
+            @TODO change to approp response.
+                {
+                    "drinks": [
+                        {
+                            "id": 1,
+                            "recipe": [
+                                {
+                                    "color": "blue",
+                                    "parts": 1
+                                }
+                            ],
+                            "title": "Water"
+                        }
+                    ],
+                    "success": true
+                }
+
+        Raises:
+            - 404 if unable to find any corresponding venue
+    """
     venue = Venue.query.filter(Venue.id == venue_id).one_or_none()
     if venue is None:
         return jsonify({
@@ -191,23 +396,66 @@ def create_app(test_config=None):
     })
 
   @app.route('/api/venues', methods=['POST'])
-  def create_venue(): 
+  @requires_auth('post:information')
+  def create_venue(payload): 
+    """ Create a athlete in DB
 
+        Permissions: post:information
+
+        Params: decoded JWT payload with:
+            - venue details
+            - required: name, city, state, address
+            - example post req:
+            @TODO: add post req 
+                {
+                    "title": "Coffee",
+                    "recipe": [{
+                        "name": "Coffee",
+                        "color": "brown",
+                        "parts": 1
+                    }]
+                }
+
+        Returns:
+            - Status code with json obj of
+               The new venue in dict
+            - Example response:
+            @TODO: add response  
+                {
+                    "athletes": [
+                        {
+                            "id": 2,
+                            "recipe": [
+                                {
+                                    "color": "brown",
+                                    "name": "Coffee",
+                                    "parts": 1
+                                }
+                            ],
+                            "title": "Coffee"
+                        }
+                    ],
+                    "success": true
+                }
+
+        Raises:
+            - 422 if name, city, state, and address are not given in
+              payload or unable to process
+    """
     data = json.loads(request.data.decode('utf-8'))
     error = False 
-
-    print('data', data)
 
     name = data.get('name', None)
     city = data.get('city', None)
     state = data.get('state', None)
     address = data.get('address', None)
 
-    print('name', name)
-    print('city', city)
-    print('state', state)
-    print('address', address)
-
+    if not name or not city or not state or not address:
+      return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "Name, city, state, and address are required."
+        }), 422
 
     try: 
       venue = Venue(
@@ -234,7 +482,48 @@ def create_app(test_config=None):
       })
 
   @app.route('/api/venues/<int:venue_id>', methods=['PATCH'])
-  def edit_venue(venue_id): 
+  @requires_auth('patch:information')
+  def edit_venue(payload, venue_id):
+    """ Edit an venue in DB
+
+        Permissions: patch:information
+
+        Params: payload, venue_id
+            - payload: decoded jwt payload that has new venue info
+            - venue_id: Id of venue to be edited
+                - venue_id is passed through the path. Ex: api/venues/2 sends
+                  patch request for venue of id=2
+            - example post req:
+                {
+                    "name": "Sugarloaf"
+                }
+
+        Returns:
+            - Status code with json obj of
+              the edited venue in long form in dict
+            - Example response:
+            @TODO change to approp response.
+                {
+                    "venues": [
+                        {
+                            "id": 2,
+                            "recipe": [
+                                {
+                                    "color": "brown",
+                                    "name": "Coffee",
+                                    "parts": 1
+                                }
+                            ],
+                            "title": "Decaf"
+                        }
+                    ],
+                    "success": true
+                }
+
+        Raises:
+            - 404 if no venue is found with corresponding venue_id
+            - 422 if unable to process request
+    """ 
     data = json.loads(request.data.decode('utf-8'))
     venue = Venue.query.filter(Venue.id == venue_id).one_or_none()
     
@@ -242,7 +531,6 @@ def create_app(test_config=None):
     city = data.get('city', None)
     state = data.get('state', None)
     address = data.get('address', None)
-
 
     if venue is None: 
       return jsonify({
@@ -271,7 +559,32 @@ def create_app(test_config=None):
         abort(422)
 
   @app.route('/api/venues/<int:venue_id>', methods=['DELETE'])
-  def delete_venue(venue_id): 
+  @requires_auth('delete:information')
+  def delete_venue(payload, venue_id):
+    """ Delete a venue with id=venue_id from DB
+
+        Permissions: delete:informatioon
+
+        Params: payload, venue_id
+            - payload: The decoded jwt payload
+            - venue_id: Id of venue to be edited
+                - venue_id is passed through the path. Ex: /api/venues/2 sends
+                  delete request for venue of id=2
+
+        Returns:
+            - Status code 200 json obj with deleted ID, message,
+              and boolean success
+            - Example response:
+                {
+                    "deleted": 2,
+                    "message": "venue deleted successfully",
+                    "success": true
+                }
+
+        Raises:
+            - 404 if no venue found with corresponding venue_id
+            - 500 if unable to process delete request
+    """ 
     error = False 
     try: 
       venue = Venue.query.get(venue_id)
