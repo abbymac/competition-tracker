@@ -41,7 +41,6 @@ def get_token_auth_header():
         - If not present, raise 401 error
     """
 
-
     # check if authorization is in request header
     if 'Authorization' not in request.headers:
         raise AuthError({
@@ -55,14 +54,14 @@ def get_token_auth_header():
     # check for bearer token
     if len(header_parts) != 2:
         raise AuthError({
-                'code': 'header_parts',
-                'description': 'more or less than 2 parts in auth_header.'
-            }, 401)
+            'code': 'header_parts',
+            'description': 'more or less than 2 parts in auth_header.'
+        }, 401)
     elif header_parts[0].lower() != 'bearer':
         raise AuthError({
-                'code': 'no_bearer',
-                'description': 'Bearer token not present.'
-            }, 401)
+            'code': 'no_bearer',
+            'description': 'Bearer token not present.'
+        }, 401)
 
     return header_parts[1]
 
@@ -89,9 +88,11 @@ def check_permissions(permission, payload):
 
     # checks if specific permission asked for is present
     if permission not in payload['permissions']:
+        print('should be exit here')
         raise AuthError({
             'code': 'unauthorized',
-            'description': 'Permissions not found. Unauthorized.'
+            'description': 'Permissions not found. Unauthorized.',
+            'error': 401
         }, 401)
     return True
     raise Exception('Not Implemented')
