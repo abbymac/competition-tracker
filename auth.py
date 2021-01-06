@@ -1,4 +1,5 @@
 import json
+import os
 from flask import request, _request_ctx_stack
 from functools import wraps
 from jose import jwt
@@ -6,13 +7,13 @@ from urllib.request import urlopen
 # from decouple import config
 
 
-AUTH0_DOMAIN = 'amack.us.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'competition'
+# AUTH0_DOMAIN = 'amack.us.auth0.com'
+# ALGORITHMS = ['RS256']
+# API_AUDIENCE = 'competition'
 
-
-# ALGORITHMS = config('ALGORITHMS')
-# API_AUDIENCE = config('API_AUDIENCE')
+AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
+ALGORITHMS = os.environ['ALGORITHMS']
+API_AUDIENCE = os.environ['API_AUDIENCE']
 
 # https://amack.us.auth0.com/authorize?audience=competition&response_type=token&client_id=20AyTE5FtHiIWxCVLLT0OkcmW9PTNwsz&redirect_uri=https://127.0.0.1:3000/
 
@@ -88,7 +89,6 @@ def check_permissions(permission, payload):
 
     # checks if specific permission asked for is present
     if permission not in payload['permissions']:
-        print('should be exit here')
         raise AuthError({
             'code': 'unauthorized',
             'description': 'Permissions not found. Unauthorized.',
