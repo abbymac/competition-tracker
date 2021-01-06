@@ -86,11 +86,10 @@ def create_app(test_config=None):
                   "success": true
               }
 
-            Raises:
-                - 404 if unable to find any corresponding athlete
         """
 
         athletes = Athlete.query.all()
+
         formatted_athletes = [athlete.format() for athlete in athletes]
 
         return jsonify({
@@ -190,7 +189,6 @@ def create_app(test_config=None):
             Params: decoded JWT payload with:
                 - athlete details
                 - required: name, age, city, state, division
-                 id = db.Column(db.Integer, primary_key=True)
                 - example post req:
                     {
                         "age": 32,
@@ -350,8 +348,6 @@ def create_app(test_config=None):
                         ]
                     }
 
-            Raises:
-                - 404 if unable to find any corresponding venue
         """
         venues = Venue.query.all()
         formatted_venues = [venue.format() for venue in venues]
@@ -612,7 +608,7 @@ def create_app(test_config=None):
     @app.route('/api/races', methods=['GET'])
     def get_races():
         """ Get all races
-        
+
             Permissions: none
 
             Params: none

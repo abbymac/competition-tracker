@@ -1,22 +1,24 @@
-Fyyur
------
+---
 
 ## Introduction
 
+For the Capstone project for Fullstack Development Nano Degree, I decided to build a program to manage and track various races. As a former athlete in national snowboard competitions, I wanted to build something that relates to real experiences I have had.
 
 ## Overview
-
 
 ## Tech Stack (Dependencies)
 
 ### 1. Backend Dependencies
-Our tech stack will include the following:
- * **virtualenv** as a tool to create isolated Python environments
- * **SQLAlchemy ORM** to be our ORM library of choice
- * **PostgreSQL** as our database of choice
- * **Python3** and **Flask** as our server language and server framework
- * **Flask-Migrate** for creating and running schema migrations
-You can download and install the dependencies mentioned above using `pip` as:
+
+The tech stack includes the following:
+
+- **virtualenv** as a tool to create isolated Python environments
+- **SQLAlchemy ORM** to be our ORM library of choice
+- **PostgreSQL** as our database of choice
+- **Python3** and **Flask** as our server language and server framework
+- **Flask-Migrate** for creating and running schema migrations
+  You can download and install the dependencies mentioned above using `pip` as:
+
 ```
 pip install virtualenv
 pip install SQLAlchemy
@@ -24,148 +26,269 @@ pip install postgres
 pip install Flask
 pip install Flask-Migrate
 ```
-> **Note** - If we do not mention the specific version of a package, then the default latest stable package will be installed. 
+
+> **Note** - If we do not mention the specific version of a package, then the default latest stable package will be installed.
 
 ### 2. Frontend Dependencies
-You must have the **HTML**, **CSS**, and **Javascript** with [Bootstrap 3](https://getbootstrap.com/docs/3.4/customize/) for our website's frontend. Bootstrap can only be installed by Node Package Manager (NPM). Therefore, if not already, download and install the [Node.js](https://nodejs.org/en/download/). Windows users must run the executable as an Administrator, and restart the computer after installation. After successfully installing the Node, verify the installation as shown below.
+
+Frontend displays data
+
+Install dependencies with
+
+```
+npm install
+```
+
 ```
 node -v
 npm -v
 ```
-Install [Bootstrap 3](https://getbootstrap.com/docs/3.3/getting-started/) for the website's frontend:
-```
-npm init -y
-npm install bootstrap@3
-```
-
-
-## Main Files: Project Structure
-
-  ```sh
-  ├── README.md
-  ├── app.py *** the main driver of the app. Includes your SQLAlchemy models.
-                    "python app.py" to run after installing dependences
-  ├── config.py *** Database URLs, CSRF generation, etc
-  ├── error.log
-  ├── forms.py *** Your forms
-  ├── requirements.txt *** The dependencies we need to install with "pip3 install -r requirements.txt"
-  ├── static
-  │   ├── css 
-  │   ├── font
-  │   ├── ico
-  │   ├── img
-  │   └── js
-  └── templates
-      ├── errors
-      ├── forms
-      ├── layouts
-      └── pages
-  ```
-
-Overall:
-* Models are located in the `MODELS` section of `app.py`.
-* Controllers are also located in `app.py`.
-* The web frontend is located in `templates/`, which builds static assets deployed to the web server at `static/`.
-* Web forms for creating data are located in `form.py`
-
-
-Highlight folders:
-* `templates/pages` -- (Already complete.) Defines the pages that are rendered to the site. These templates render views based on data passed into the template’s view, in the controllers defined in `app.py`. These pages successfully represent the data to the user, and are already defined for you.
-* `templates/layouts` -- (Already complete.) Defines the layout that a page can be contained in to define footer and header code for a given page.
-* `templates/forms` -- (Already complete.) Defines the forms used to create new artists, shows, and venues.
-* `app.py` -- (Missing functionality.) Defines routes that match the user’s URL, and controllers which handle data and renders views to the user. This is the main file you will be working on to connect to and manipulate the database and render views with data to the user, based on the URL.
-* Models in `app.py` -- (Missing functionality.) Defines the data models that set up the database tables.
-* `config.py` -- (Missing functionality.) Stores configuration variables and instructions, separate from the main application code. This is where you will need to connect to the database.
-
-
-Instructions
------
-
-1. Understand the Project Structure (explained above) and where important files are located.
-2. Build and run local development following the Development Setup steps below.
-3. Fill in the missing functionality in this application: this application currently pulls in fake data, and needs to now connect to a real database and talk to a real backend.
-3. Fill out every `TODO` section throughout the codebase. We suggest going in order of the following:
-
-  1. Connect to a database in `config.py`. A project submission that uses a local database connection is fine.
-  2. Using SQLAlchemy, set up normalized models for the objects we support in our web app in the Models section of `app.py`. Check out the sample pages provided at /artists/1, /venues/1, and /shows/1 for examples of the data we want to model, using all of the learned best practices in database schema design. Implement missing model properties and relationships using database migrations via Flask-Migrate.
-  3. Implement form submissions for creating new Venues, Artists, and Shows. There should be proper constraints, powering the `/create` endpoints that serve the create form templates, to avoid duplicate or nonsensical form submissions. Submitting a form should create proper new records in the database.
-  4. Implement the controllers for listing venues, artists, and shows. Note the structure of the mock data used. We want to keep the structure of the mock data.
-  5. Implement search, powering the `/search` endpoints that serve the application's search functionalities.
-  6. Serve venue and artist detail pages, powering the `<venue|artist>/<id>` endpoints that power the detail pages.
-
-
-Acceptance Criteria
------
-
-1. The web app should be successfully connected to a PostgreSQL database. A local connection to a database on your local computer is fine.
-2. There should be no use of mock data throughout the app. The data structure of the mock data per controller should be kept unmodified when satisfied by real data.
-3. The application should behave just as before with mock data, but now uses real data from a real backend server, with real search functionality. For example:
-  * when a user submits a new artist record, the user should be able to see it populate in /artists, as well as search for the artist by name and have the search return results.
-  * I should be able to go to the URL `/artist/<artist-id>` to visit a particular artist’s page using a unique ID per artist, and see real data about that particular artist.
-  * Venues should continue to be displayed in groups by city and state.
-  * Search should be allowed to be partial string matching and case-insensitive.
-  * Past shows versus Upcoming shows should be distinguished in Venue and Artist pages.
-  * A user should be able to click on the venue for an upcoming show in the Artist's page, and on that Venue's page, see the same show in the Venue Page's upcoming shows section.
-4. As a fellow developer on this application, I should be able to run `flask db migrate`, and have my local database (once set up and created) be populated with the right tables to run this application and have it interact with my local postgres server, serving the application's needs completely with real data I can seed my local database with.
-  * The models should be completed (see TODOs in the `Models` section of `app.py`) and model the objects used throughout Fyyur.
-  * The right _type_ of relationship and parent-child dynamics between models should be accurately identified and fit the needs of this particular application.
-  * The relationship between the models should be accurately configured, and referential integrity amongst the models should be preserved.
-  * `flask db migrate` should work, and populate my local postgres database with properly configured tables for this application's objects, including proper columns, column data types, constraints, defaults, and relationships that completely satisfy the needs of this application. The proper type of relationship between venues, artists, and shows should be configured.
-
-##### Stand Out
-
-Looking to go above and beyond? This is the right section for you! Here are some challenges to make your submission stand out:
-
-*  Implement artist availability. An artist can list available times that they can be booked. Restrict venues from being able to create shows with artists during a show time that is outside of their availability.
-* Show Recent Listed Artists and Recently Listed Venues on the homepage, returning results for Artists and Venues sorting by newly created. Limit to the 10 most recently listed items.
-* Implement Search Artists by City and State, and Search Venues by City and State. Searching by "San Francisco, CA" should return all artists or venues in San Francisco, CA.
-
-Best of luck in your final project! Fyyur depends on you!
-
 
 ## Development Setup
+
 1. **Download the project starter code locally**
+
 ```
-git clone https://github.com/udacity/FSND.git
-cd FSND/projects/01_fyyur/starter_code 
+git clone https://github.com/abbymac/capstone.git
+cd capstone
 ```
 
-2. **Create an empty repository in your Github account online. To change the remote repository path in your local repository, use the commands below:**
-```
-git remote -v 
-git remote remove origin 
-git remote add origin <https://github.com/<USERNAME>/<REPO_NAME>.git>
-git branch -M master
-```
-Once you have finished editing your code, you can push the local repository to your Github account using the following commands.
-```
-git add . --all   
-git commit -m "your comment"
-git push -u origin master
-```
+2. **Initialize and activate a virtualenv using:**
 
-3. **Initialize and activate a virtualenv using:**
 ```
 python -m virtualenv env
 source env/bin/activate
 ```
->**Note** - In Windows, the `env` does not have a `bin` directory. Therefore, you'd use the analogous command shown below:
+
+> **Note** - In Windows, the `env` does not have a `bin` directory. Therefore, you'd use the analogous command shown below:
+
 ```
 source env/Scripts/activate
 ```
 
 4. **Install the dependencies:**
+
 ```
 pip install -r requirements.txt
 ```
 
 5. **Run the development server:**
+
 ```
 export FLASK_APP=myapp
 export FLASK_ENV=development # enables debug mode
 python3 app.py
 ```
 
-6. **Verify on the Browser**<br>
-Navigate to project homepage [http://127.0.0.1:5000/](http://127.0.0.1:5000/) or [http://localhost:5000](http://localhost:5000) 
+# API Reference
 
+## Getting Started
+
+- Base URL:
+
+- Authentication: Authentication is operated through Auth0. The roles exist as such:
+
+#### Spectator
+
+Spectator role is read only. It can only fetch information, but is not authorized to edit, create, or delete anything.
+
+#### Organizer
+
+An organizer has all edit access. It can create, edit, and delete new athletes, venues, and races.
+
+## Error Handling
+
+Errors are returned as JSON objects in the following format:
+
+```
+{
+	"success": False,
+  "error": 400,
+  "message": "Bad request"
+}
+
+```
+
+The API will return three error types when requests fail:
+
+- 400: Bad Request
+- 404: Resource Not Found
+- 422: Unprocessable entity
+- 500: Internal Server Error
+
+## Endpoints
+
+### GET '/api/athletes'
+
+- Get all athletes from DB
+- Permissions: none.
+- Returns: 200 status code with json obj of athletes in dict
+- Sample returned object:
+
+```
+    {
+        "athletes": [
+            {
+                "age": 23,
+                "city": "Portland",
+                "division": "elite",
+                "id": 2,
+                "name": "Emma",
+                "phone": "2071234567",
+                "state": "ME"
+            },
+            {
+                "age": 24,
+                "city": "CE",
+                "division": "elite",
+                "id": 1,
+                "name": "Heidi",
+                "phone": null,
+                "state": "ME"
+            },
+        ],
+        "success": true
+    }
+```
+
+### DELETE 'api/athletes/<int:athlete_id>'
+
+- Delete a athlete with id=athlete_id from DB
+- Permissions: requires delete:information permission
+- Request Argument: payload, 'athlete_id'. Where ID is an integer
+- Returns: an object with keys: 'deleted', 'message', 'success'
+- Sample returned object:
+
+```
+{
+    "deleted": 2,
+    "message": "athlete deleted successfully",
+    "success": true
+}
+```
+
+Raises:
+
+- 404 if no athlete found with corresponding athlete_id
+- 500 if unable to process delete request
+
+### POST '/questions'
+
+- Create new question
+- Request Argument: none
+- Requires: a question object
+
+Sample returned object:
+
+```
+	{
+    	'success': True,
+        'message': 'Question created successfully'
+    }
+```
+
+### POST '/api/athletes'
+
+- Create a athlete in DB.
+- Params: decoded JWT payload with:
+  - athlete details
+  - required: name, age, city, state, division
+  - example post req:
+  ```
+       {
+           "age": 32,
+           "city": "Burlington",
+           "division": "elite",
+           "name": "Lex",
+           "phone": "1213445989",
+           "state": "VT"
+       }
+  ```
+- Returns: Status code with json obj of the new athlete in formatted dict
+
+Sample returned object:
+
+```
+{
+    "athlete": {
+        "age": 32,
+        "city": "Burlington",
+        "division": "elite",
+        "id": 10,
+        "name": "Lex",
+        "phone": "1213445989",
+        "state": "VT"
+    },
+    "message": "Athlete created successfully",
+    "success": true
+}
+
+```
+
+Raises:
+
+- 422 if name, age, city, state, and division are not given in
+  payload or unable to process
+
+### PATCH '/api/athletes/<int:athlete_id>
+
+- Edit an athlete in DB
+- Permissions: patch:information
+- Params: payload, athlete_id
+  - payload: decoded jwt payload that has new athlete info
+  - athlete_id: Id of athlete to be edited
+    - athlete_id is passed through the path.
+      Ex: api/athletes/2 sends
+      patch request for athlete of id=2
+  - example post req:
+  ```
+  {
+      "name": "Abby"
+  }
+  ```
+- Returns: Status code with json obj of the edited athlete in dict
+
+Sample object returned with athlete_id=1
+
+```
+{
+    "athlete": {
+        "age": 24,
+        "city": "CE",
+        "division": "elite",
+        "id": 1,
+        "name": "Jay",
+        "phone": null,
+        "state": "ME"
+    },
+    "success": true
+}
+
+```
+
+Raises:
+
+- 404 if no athlete is found with corresponding athlete_id
+- 422 if unable to process request
+
+### GET '/api/venues'
+
+- Get all venues from DB
+- Permissions: none.
+- Returns: 200 status code with json obj of athletes in dict
+- Sample returned object:
+
+```
+    {
+        "success": true,
+        "venues": [
+            {
+                "address": "1 main street",
+                "city": "CV",
+                "id": 1,
+                "name": "Sugarloaf",
+                "state": "ME"
+            }
+        ]
+    }
+```

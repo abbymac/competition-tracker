@@ -23,10 +23,12 @@ def setup_db(app, database_path=database_path):
     db.init_app(app)
     # db.create_all()
 
+
 racers = db.Table('racers', 
     db.Column('racer_id', db.Integer, db.ForeignKey('athletes.id'), primary_key=True),
     db.Column('race_id', db.Integer, db.ForeignKey('races.id'), primary_key=True)
 )
+
 
 class Venue(db.Model): 
     __tablename__ = 'venues'
