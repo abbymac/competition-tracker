@@ -755,7 +755,8 @@ def create_app(test_config=None):
 
     return app
 
-APP = create_app()
+
+app = create_app()
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
