@@ -1,0 +1,678 @@
+{
+	"info": {
+		"_postman_id": "30e804f3-99d2-4295-b0d8-16a70f1db4b8",
+		"name": "Capstone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "spectator",
+			"item": [
+				{
+					"name": "/athletes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains athlete array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.athletes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/athletes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"athletes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/athletes/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Jay\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/athletes/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"athletes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/athletes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"age\": 32,\n    \"city\": \"Burlington\",\n    \"division\": \"elite\",\n    \"name\": \"Jay\",\n    \"phone\": \"1213445989\",\n    \"state\": \"VT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/athletes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"athletes"
+							]
+						},
+						"description": "Test to create new athlete with insufficient credentials"
+					},
+					"response": []
+				},
+				{
+					"name": "/athletes/6",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/athletes/9",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"athletes",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/venues",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/venues",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"venues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/venues",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 401\", function () {",
+									"    pm.response.to.have.status(401);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Sunday River\",\n    \"city\": \"Bethel\",\n    \"state\": \"VT\",\n    \"address\": \"6 main street\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/venues",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"venues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/races",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains race array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.races).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/races",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"races"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InMxd1BDcXVzeC05UXJ4TEhIR05RcCJ9.eyJpc3MiOiJodHRwczovL2FtYWNrLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZjliMTFkOThlMzZhYzAwNjllOTMzMjIiLCJhdWQiOiJjb21wZXRpdGlvbiIsImlhdCI6MTYxMDU2MDIzNSwiZXhwIjoxNjEwNjQ2NjM1LCJhenAiOiIyMEF5VEU1RnRIaUlXeENWTExUME9rY21XOVBUTndzeiIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmluZm9ybWF0aW9uIl19.AYJM-AjBoH_SBc-YEA5SiVXZWIjLmGptCK1lJR1Am-6J2_3Ggpw6U_Ud6xqKH5M27pey2jctXq1oG-g-Ri0dv0_Zp04V7WEmx4tiEvfZXYuLhlMlXMMN5nOT9CYB_9xOdUb55czuQes_hu7Q5UghUKooQ5VsO4Nlr_inXJPdAtVmHlWOKSsA2oQfatZnrdUiB1SmhGRLrhhVnLQtcf5E_YIlZK9rJ6iXB9cddxGPpP8ZQSK_8K-ffrZ2L2t93eUD3Wf8kRoSHVRCwo9x27Wow-69Q1veT8Po6xXN5qQaZUUvIg3P0NTCxFCvj3eDcwxSTffWRZ_ZVnvfGJYmwm9yEg",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "organizer",
+			"item": [
+				{
+					"name": "/races",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains race array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.races).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/races",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"races"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/athletes/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Jay\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/athletes/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"athletes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/athletes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"age\": 32,\n    \"city\": \"Burlington\",\n    \"division\": \"elite\",\n    \"name\": \"Lex\",\n    \"phone\": \"1213445989\",\n    \"state\": \"VT\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/athletes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"athletes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/athletes",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"value contains athlete array\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.athletes).to.be.an('array')",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/athletes",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"athletes"
+							]
+						},
+						"description": "get all athletes"
+					},
+					"response": []
+				},
+				{
+					"name": "/athletes/6",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/athletes/9",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"athletes",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/venues",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Sunday River\",\n    \"city\": \"Bethel\",\n    \"state\": \"VT\",\n    \"address\": \"6 main street\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/venues",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"venues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/venues",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/venues",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"venues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/venues/3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{host}}/venues/7",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"venues",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/venues/1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"address\": \"7 main street\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}/venues/1",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"venues",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InMxd1BDcXVzeC05UXJ4TEhIR05RcCJ9.eyJpc3MiOiJodHRwczovL2FtYWNrLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw1ZmEwNWM0MmI0NzI2ODAwNzZlYzg2OGQiLCJhdWQiOiJjb21wZXRpdGlvbiIsImlhdCI6MTYxMDU2MDUzNCwiZXhwIjoxNjEwNjQ2OTM0LCJhenAiOiIyMEF5VEU1RnRIaUlXeENWTExUME9rY21XOVBUTndzeiIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmluZm9ybWF0aW9uIiwiZ2V0OmluZm9ybWF0aW9uIiwicGF0Y2g6aW5mb3JtYXRpb24iLCJwb3N0OmluZm9ybWF0aW9uIl19.zZTq0HHtNbuuoQDml4msCeV8y16vrYnVXTQATw9V90_JGzA0yQTrArorN8MleBECQrbcsXHVOmJrLiVcCLw1to-vyH0bofJJpPGXYvxQJQ-scjqB--J8QMBtIhDN17Mxa8hs5Y9ZtFHtlmcybFRk8HOVTEjLPhXrdlKtXYPBlPiwcbZ8sYuFeDd-54ujoyvj0yQBoc9qoyXQas8G_Sxor78zfXfuZxK0AlSISFHz-loi9fJzjqkkkQzdOsBH4esyWi5y_hO4foe6CmdkoDIZAzDdGsjc81y89qGKO3iX65h5jCmKqnS0xOiGdVl59STc4ow9-R5FM97A9THFNUoFug",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost:5000/api"
+		}
+	]
+}

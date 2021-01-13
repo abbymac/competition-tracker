@@ -16,6 +16,7 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 
+
 def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_DATABASE_URI"] = database_path
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -24,13 +25,21 @@ def setup_db(app, database_path=database_path):
     # db.create_all()
 
 
-racers = db.Table('racers', 
-    db.Column('racer_id', db.Integer, db.ForeignKey('athletes.id'), primary_key=True),
-    db.Column('race_id', db.Integer, db.ForeignKey('races.id'), primary_key=True)
-)
+racers = db.Table(
+    'racers',
+    db.Column(
+        'racer_id',
+        db.Integer,
+        db.ForeignKey('athletes.id'),
+        primary_key=True),
+    db.Column(
+        'race_id',
+        db.Integer,
+        db.ForeignKey('races.id'),
+        primary_key=True))
 
 
-class Venue(db.Model): 
+class Venue(db.Model):
     __tablename__ = 'venues'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -39,15 +48,15 @@ class Venue(db.Model):
     state = db.Column(db.String(120), nullable=False)
     address = db.Column(db.String(120), nullable=False)
     # races = db.relationship('Race', backref='venues')
-    
-    def insert(self): 
+
+    def insert(self):
         db.session.add(self)
         db.session.commit()
-    
-    def update(self): 
+
+    def update(self):
         db.session.commit()
-    
-    def delete(self): 
+
+    def delete(self):
         db.session.delete(self)
         db.session.commit()
 
@@ -63,7 +72,8 @@ class Venue(db.Model):
     def __repr__(self):
         return f'<Venue ID: {self.id}, name: {self.name}>'
 
-class Athlete(db.Model): 
+
+class Athlete(db.Model):
     __tablename__ = 'athletes'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -75,14 +85,14 @@ class Athlete(db.Model):
     division = db.Column(db.String(120), nullable=False)
     # races = db.relationship('Race', backref='athlete')
 
-    def insert(self): 
+    def insert(self):
         db.session.add(self)
         db.session.commit()
-    
-    def update(self): 
+
+    def update(self):
         db.session.commit()
-    
-    def delete(self): 
+
+    def delete(self):
         db.session.delete(self)
         db.session.commit()
 
@@ -100,6 +110,7 @@ class Athlete(db.Model):
     def __repr__(self):
         return f'<Athlete ID: {self.id}, name: {self.name}>'
 
+
 class Race(db.Model):
     __tablename__ = 'races'
 
@@ -108,11 +119,14 @@ class Race(db.Model):
     start_time = db.Column(db.DateTime, nullable=False)
     division = db.Column(db.String, nullable=False)
     prize = db.Column(db.Integer, nullable=False)
-    athletes = db.relationship('Athlete', secondary=racers, 
-        backref=db.backref('races', lazy=True))
+    athletes = db.relationship('Athlete', secondary=racers,
+                               backref=db.backref('races', lazy=True))
 
     # athletes = db.relationship('Race', backref='athlete')
-    venue_id = db.Column(db.Integer, db.ForeignKey('venues.id'), nullable=False)
+    venue_id = db.Column(
+        db.Integer,
+        db.ForeignKey('venues.id'),
+        nullable=False)
 
     def format(self):
         return {

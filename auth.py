@@ -14,8 +14,8 @@ API_AUDIENCE = 'competition'
 # AUTH0_DOMAIN = os.environ['AUTH0_DOMAIN']
 # ALGORITHMS = os.environ['ALGORITHMS']
 # API_AUDIENCE = os.environ['API_AUDIENCE']
-
 # https://amack.us.auth0.com/authorize?audience=competition&response_type=token&client_id=20AyTE5FtHiIWxCVLLT0OkcmW9PTNwsz&redirect_uri=https://127.0.0.1:3000/
+
 
 class AuthError(Exception):
     """ A standardized way to communicate auth failure modes
