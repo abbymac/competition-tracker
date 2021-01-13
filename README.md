@@ -4,6 +4,8 @@
 
 For the Capstone project for Fullstack Development Nano Degree, I decided to build a program to manage and track various races. As a former athlete in national snowboard competitions, I wanted to build something that relates to real experiences I have had.
 
+Hosted on: https://capstone-competition-tracker.herokuapp.com/
+
 ## Overview
 
 ## Tech Stack (Dependencies)
