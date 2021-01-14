@@ -27,7 +27,7 @@ from models import setup_db, db, Athlete, Venue, Race, racers
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, 
+    app = Flask(__name__,
                 static_url_path='',
                 static_folder='frontend/build')
     CORS(app)
