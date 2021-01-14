@@ -28,9 +28,7 @@ from models import setup_db, db, Athlete, Venue, Race, racers
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__,
-                static_url_path='',
-                static_folder='frontend/build')
+    app = Flask(__name__)
     CORS(app)
     setup_db(app)
     migrate = Migrate(app, db)
@@ -47,9 +45,9 @@ def create_app(test_config=None):
             'GET,PATCH,POST,DELETE,OPTIONS')
         return response
 
-    @app.route('/')
-    def index():
-        return app.send_static_file('index.html')
+    # @app.route('/')
+    # def index():
+    #     return app.send_static_file('index.html')
         # return render_template('index.html')
 
     # ----------------------------------------------------------------------------------------

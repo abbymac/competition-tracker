@@ -35,7 +35,7 @@ function App() {
   });
 
   return (
-    <BigBackground>
+    <BigBackground className="App">
       <Router location={window.location.href}>
         <NavBar mobile={isMobileSize} transparent={navBackground} />
         <Switch>
