@@ -5,8 +5,6 @@ import json
 from flask import (
   Flask,
   render_template,
-  send_static_file,
-  send_from_directory,
   request,
   Response,
   flash,
