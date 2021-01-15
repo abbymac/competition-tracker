@@ -43,10 +43,10 @@ def create_app(test_config=None):
             'GET,PATCH,POST,DELETE,OPTIONS')
         return response
 
-    # @app.route('/')
-    # def index():
-    #     return app.send_static_file('index.html')
-        # return render_template('index.html')
+    @app.route('/')
+    def index():
+        # return app.send_static_file('index.html')
+        return render_template('index.html')
 
     # ----------------------------------------------------------------------------------------
     # Athletes
